@@ -1,0 +1,610 @@
+{
+  "name": "Corona",
+  "compatibilityLevel": 1560,
+  "model": {
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "dataSources": [
+      {
+        "name": "MKServer Corona",
+        "connectionString": "Data Source=MKServer;Initial Catalog=Corona;Integrated Security=True;Persist Security Info=True",
+        "impersonationMode": "impersonateServiceAccount",
+        "provider": "System.Data.SqlClient"
+      }
+    ],
+    "tables": [
+      {
+        "name": "Calendar",
+        "lineageTag": "58d6a4f5-2a2f-452b-a80a-ab8d3a1daa30",
+        "dataCategory": "Time",
+        "columns": [
+          {
+            "name": "CalendarId",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "CalendarId",
+            "lineageTag": "13a9d5b8-788a-440b-9ae8-4cb4c46f933f"
+          },
+          {
+            "name": "Calendar Date",
+            "dataType": "dateTime",
+            "isKey": true,
+            "sourceColumn": "CalendarDate",
+            "lineageTag": "3179f9b3-9014-4cd8-81aa-4a01106af054"
+          },
+          {
+            "name": "Calendar Month",
+            "dataType": "dateTime",
+            "sourceColumn": "CalendarMonth",
+            "formatString": "mmmm YYYY",
+            "lineageTag": "3d83f335-8f0a-4de0-a8f3-266f1f4febce"
+          },
+          {
+            "name": "Today Flag",
+            "dataType": "string",
+            "sourceColumn": "TodayFlag",
+            "lineageTag": "1a66d7a2-bdb1-4981-aa31-a6eab92fa349"
+          },
+          {
+            "name": "Time Reference Flag",
+            "dataType": "string",
+            "sourceColumn": "TimeReferenceFlag",
+            "lineageTag": "2a5ab18e-0bd0-4366-9c22-aa49ecfca9ef"
+          },
+          {
+            "name": "Data Start Flag",
+            "dataType": "string",
+            "sourceColumn": "DataStartFlag",
+            "lineageTag": "34e72fc0-59b0-4ce2-a274-f412085e9d1e"
+          },
+          {
+            "name": "Data End Flag",
+            "dataType": "string",
+            "sourceColumn": "DataEndFlag",
+            "lineageTag": "721a7327-3321-454d-a163-b3e3d80d0f73"
+          },
+          {
+            "name": "Data Available Flag",
+            "dataType": "string",
+            "sourceColumn": "DataAvailableFlag",
+            "lineageTag": "7c679e6a-8dbb-4102-a06b-f8c4bd48860e"
+          },
+          {
+            "name": "Last 5 Days Flag",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "Last5DaysFlag",
+            "lineageTag": "bc4e2f2f-bacc-4285-bffc-f62c1a44a5b9"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Calendar",
+            "source": {
+              "type": "query",
+              "query": "SELECT * FROM [CoronaView].[DIM_Calendar]",
+              "dataSource": "MKServer Corona"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Geography",
+        "lineageTag": "7f37fb4c-c561-4a57-8bdb-bb633a395464",
+        "columns": [
+          {
+            "name": "Country",
+            "dataType": "string",
+            "sourceColumn": "Country",
+            "lineageTag": "b87bcd56-a6ba-4e3a-b853-6708abdf0b9b"
+          },
+          {
+            "name": "Province",
+            "dataType": "string",
+            "sourceColumn": "Province_State",
+            "lineageTag": "7efa8de7-0aa6-4fb9-9339-9471dcb9e31f"
+          },
+          {
+            "name": "GeographyId",
+            "dataType": "int64",
+            "isHidden": true,
+            "isKey": true,
+            "sourceColumn": "GeographyId",
+            "lineageTag": "ab21b905-9876-47a2-9c88-8b92024c25fc"
+          },
+          {
+            "name": "Top Case Country Flag",
+            "dataType": "string",
+            "sourceColumn": "TopCaseCountryFlag",
+            "lineageTag": "6c1ca65c-9a45-4f8e-b693-7a5bd37761c4"
+          },
+          {
+            "name": "Population",
+            "dataType": "int64",
+            "sourceColumn": "CountryPopulation",
+            "formatString": "#,0",
+            "lineageTag": "542f1904-7d7d-4575-883a-7ed5bf03205b",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "US State Population",
+            "dataType": "int64",
+            "sourceColumn": "USStatePopulation",
+            "formatString": "#,0",
+            "lineageTag": "6ec21756-918f-4119-93e5-46ef46db15ca",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "City",
+            "dataType": "string",
+            "sourceColumn": "City",
+            "lineageTag": "92df786d-2bc9-4477-ae2b-78ff0c5f6d59"
+          },
+          {
+            "name": "Country Flag",
+            "dataType": "string",
+            "sourceColumn": "CountryFlag",
+            "lineageTag": "5d727929-91fb-4c92-80bb-a5c16342b5ac",
+            "dataCategory": "ImageURL"
+          },
+          {
+            "type": "calculated",
+            "name": "Country 1",
+            "dataType": "unknown",
+            "isDataTypeInferred": true,
+            "expression": "RELATED('Geography'[Country])",
+            "lineageTag": "d9820584-2e4a-431c-b5f4-609227728f59"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Geography",
+            "source": {
+              "type": "query",
+              "query": "SELECT * FROM [CoronaView].[DIM_Geography]",
+              "dataSource": "MKServer Corona"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Corona",
+        "description": "This table shows all COVID-19 case data.",
+        "lineageTag": "160c8781-60e6-4a00-b701-97b348a7b17b",
+        "columns": [
+          {
+            "name": "CalendarId",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "CalendarId",
+            "lineageTag": "a5e4544b-9cf7-4f35-ad77-9795ea4f3812"
+          },
+          {
+            "name": "ConfirmedCount",
+            "dataType": "double",
+            "isHidden": true,
+            "sourceColumn": "ConfirmedCount",
+            "lineageTag": "f74b2405-a458-4a1b-ab81-5997cf5f3d59"
+          },
+          {
+            "name": "DeathsCount",
+            "dataType": "double",
+            "isHidden": true,
+            "sourceColumn": "DeathsCount",
+            "lineageTag": "f7e377d1-ff21-494f-8856-058a1c07c114"
+          },
+          {
+            "name": "ActiveCount",
+            "dataType": "double",
+            "isHidden": true,
+            "sourceColumn": "ActiveCount",
+            "lineageTag": "2b66ef93-3eab-4ca5-babc-29eec3c0aa5d"
+          },
+          {
+            "name": "RecoveredCount",
+            "dataType": "double",
+            "isHidden": true,
+            "sourceColumn": "RecoveredCount",
+            "lineageTag": "9c210e79-7cd3-462b-9a46-824793e34763"
+          },
+          {
+            "name": "Longitude",
+            "dataType": "double",
+            "sourceColumn": "Longitude",
+            "lineageTag": "2407a7e9-9cbb-4172-a4b4-15d680e5504d"
+          },
+          {
+            "name": "Latitude",
+            "dataType": "double",
+            "sourceColumn": "Latitude",
+            "lineageTag": "f4b2934b-6895-4253-901b-7eafd5d648a4"
+          },
+          {
+            "name": "GeographyId",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "GeographyId",
+            "lineageTag": "b5e0dd51-1dd8-4dfb-abd7-ce28a03ae68a"
+          },
+          {
+            "name": "LastUpdate",
+            "dataType": "dateTime",
+            "isHidden": true,
+            "sourceColumn": "Last_Update",
+            "lineageTag": "319ee9e9-c7d5-431c-9598-66f265b45231"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Corona",
+            "source": {
+              "type": "query",
+              "query": "SELECT * FROM [CoronaView].[FACT_Corona]",
+              "dataSource": "MKServer Corona"
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "Deaths",
+            "expression": "IF (    HASONEVALUE ( 'Calendar'[Calendar Date] ),    SUM('Corona'[DeathsCount]),    CALCULATE (        SUM('Corona'[DeathsCount]),        LASTNONBLANK ( 'Corona'[CalendarId], SUM('Corona'[DeathsCount]) )    ))",
+            "formatString": "#,0",
+            "lineageTag": "0fcf3a0a-6983-4c0b-b894-361d9b1367a5"
+          },
+          {
+            "name": "Active Cases",
+            "expression": "IF (    HASONEVALUE ( 'Calendar'[Calendar Date] ),    SUM ( 'Corona'[ActiveCount] ),    CALCULATE (        SUM ( 'Corona'[ActiveCount] ),        LASTNONBLANK ( 'Corona'[CalendarId], SUM ( 'Corona'[ActiveCount] ) )    ))",
+            "formatString": "#,0",
+            "lineageTag": "db7fc66c-8454-485d-b90a-ccd92dde1cb2"
+          },
+          {
+            "name": "Cases",
+            "description": "Shows the cumulative number of cases.",
+            "expression": "IF (    HASONEVALUE ( 'Calendar'[Calendar Date] ),    SUM ( 'Corona'[ConfirmedCount] ),    CALCULATE (        SUM ( 'Corona'[ConfirmedCount] ),        LASTNONBLANK ( 'Corona'[CalendarId], SUM ( 'Corona'[ConfirmedCount] ) )    ))",
+            "formatString": "#,0",
+            "lineageTag": "bc88cdcb-3161-4903-885f-b68d89163021"
+          },
+          {
+            "name": "Recovered",
+            "expression": "IF (    HASONEVALUE ( 'Calendar'[Calendar Date] ),    SUM ( 'Corona'[RecoveredCount] ),    CALCULATE (        SUM ( 'Corona'[RecoveredCount] ),        LASTNONBLANK ( 'Corona'[CalendarId], SUM ( 'Corona'[RecoveredCount] ) )    ))",
+            "formatString": "#,0",
+            "lineageTag": "7dfdaf94-4da4-43d1-a5b1-51051034fdb0"
+          },
+          {
+            "name": "New Deaths",
+            "expression": "VAR x =    CALCULATE ( [Deaths], DATEADD ( 'Calendar'[Calendar Date], -1, DAY ) )VAR y = [Deaths]RETURN    IF ( NOT ( x = BLANK () || y = BLANK () ), y - x )",
+            "formatString": "#,0",
+            "displayFolder": "New",
+            "lineageTag": "ba9432c8-01e0-40dc-9fef-9792973340aa"
+          },
+          {
+            "name": "New Cases",
+            "expression": "VAR x =    CALCULATE ( [Cases], DATEADD ( 'Calendar'[Calendar Date], -1, DAY ) )VAR y = [Cases]RETURN    IF ( NOT ( x = BLANK () || y = BLANK () ), y - x )",
+            "formatString": "#,0",
+            "displayFolder": "New",
+            "lineageTag": "4f088645-c751-43fe-a31e-cdd2f8541d0d"
+          },
+          {
+            "name": "New Recovered",
+            "expression": "VAR x =    CALCULATE ( [Recovered], DATEADD ( 'Calendar'[Calendar Date], -1, DAY ) )VAR y = [Recovered]RETURN    IF ( NOT ( x = BLANK () || y = BLANK () ), y - x )",
+            "formatString": "#,0",
+            "displayFolder": "New",
+            "lineageTag": "bb48ea55-6329-422e-ade9-5a6c80aa2ee6"
+          },
+          {
+            "name": "New Case Growth Rate %",
+            "expression": "VAR x =    CALCULATE ( [New Cases], DATEADD ( 'Calendar'[Calendar Date], -1, DAY ) )VAR y =    [New Cases]RETURN    IF ( NOT ( y = BLANK () ), DIVIDE ( y - x, x ) )",
+            "formatString": "#,0.0%;-#,0.0%;#,0.0%",
+            "displayFolder": "Growth",
+            "lineageTag": "914a8a1b-ccdd-4de2-8237-cd148f7ba0ad"
+          },
+          {
+            "name": "Active Case Growth Rate %",
+            "expression": "VAR x =    CALCULATE ( [Active Cases], DATEADD ( 'Calendar'[Calendar Date], -1, DAY ) )VAR y =    [Active Cases]RETURN    IF ( NOT ( y = BLANK () ), DIVIDE ( y - x, x ) )",
+            "formatString": "#,0.0%;-#,0.0%;#,0.0%",
+            "displayFolder": "Growth",
+            "lineageTag": "16516508-7706-4bcd-b099-1268ea16f8da"
+          },
+          {
+            "name": "Cases Growth Rate %",
+            "expression": "VAR x =    CALCULATE ( [Cases], DATEADD ( 'Calendar'[Calendar Date], -1, DAY ) )VAR y =    [Cases]RETURN    IF ( NOT ( y = BLANK () ), DIVIDE ( y - x, x ) )",
+            "formatString": "#,0.0%;-#,0.0%;#,0.0%",
+            "displayFolder": "Growth",
+            "lineageTag": "266ab49f-cdca-4477-96f4-18483ff7c0c0"
+          },
+          {
+            "name": "Cases per 1M pop",
+            "expression": "VAR num = [Cases]VAR denomcountry =    DIVIDE ( MIN ( 'Geography'[Population] ), 1000000 )VAR wppm = 7774VAR denomstate =    DIVIDE ( MIN ( 'Geography'[US State Population] ), 1000000 )VAR usppm = 331RETURN    IF (        ISFILTERED ( 'Geography'[Province] ),        IF (            HASONEVALUE ( 'Geography'[Province] ),            DIVIDE ( num, denomstate ),            DIVIDE ( num, usppm )        ),        IF (            HASONEVALUE ( 'Geography'[Country] ),            DIVIDE ( num, denomcountry ),            DIVIDE ( num, wppm )        )    )",
+            "formatString": "#,0",
+            "displayFolder": "Advanced",
+            "lineageTag": "b8741491-a9d0-45c5-961e-9f1953942c5d"
+          },
+          {
+            "name": "Days of Consecutive Neg Case Growth",
+            "expression": "//VAR lastdayofincrease =//    CALCULATE (//        MAX ( 'Calendar'[Calendar Date] ),//        'Calendar'[Data Available Flag] = \"Yes\",//        FILTER (//            ALL ( 'Calendar' ),//            [Cases Growth Rate %]//                >= CALCULATE (//                    [Cases Growth Rate %],//                    DATEADD ( 'Calendar'[Calendar Date], -1, DAY )//                )//        )//    )VAR lastdayofincrease =    CALCULATE (        MAX ( 'Calendar'[Calendar Date] ),        'Calendar'[Data Available Flag] = \"Yes\",        FILTER (            ALL ( 'Calendar' ),            [New Cases]                >= CALCULATE (                    [New Cases],                    DATEADD ( 'Calendar'[Calendar Date], -1, DAY )                )        )    )    VAR lastday =    CALCULATE (        MAX ( 'Calendar'[Calendar Date] ),        FILTER (            ALL ( 'Calendar' ),            CALCULATE ( SUM ( 'Corona'[ConfirmedCount] ) > 0 )        )    )RETURN    DATEDIFF ( lastdayofincrease, lastday, DAY )",
+            "formatString": "#,0",
+            "displayFolder": "Advanced",
+            "lineageTag": "666f033c-7b15-4088-9dd1-13dec0900c5b"
+          },
+          {
+            "name": "Death Rate %",
+            "expression": "DIVIDE ( [Deaths], [Cases] )",
+            "formatString": "#,0.0%;-#,0.0%;#,0.0%",
+            "lineageTag": "cb1a3d94-682e-4025-b6cb-a373f11d6921"
+          },
+          {
+            "name": "Recovered Rate %",
+            "expression": "DIVIDE ( [Recovered], [Cases] )",
+            "formatString": "#,0.0%;-#,0.0%;#,0.0%",
+            "lineageTag": "f3d78865-fce5-48ca-a046-53952f7b6975"
+          },
+          {
+            "name": "Closed Cases",
+            "expression": "[Recovered] + [Deaths]",
+            "formatString": "#,0",
+            "lineageTag": "f563fe08-c587-4853-a61f-cb1c873f6628"
+          },
+          {
+            "name": "Recovery Rate of Closed Cases %",
+            "expression": "VAR num =    CALCULATE (        SUM ( 'Corona'[RecoveredCount] ),        LASTNONBLANK ( 'Corona'[CalendarId], SUM ( 'Corona'[RecoveredCount] ) )    )VAR denom =    num        + CALCULATE (            SUM ( 'Corona'[DeathsCount] ),            LASTNONBLANK ( 'Corona'[CalendarId], SUM ( 'Corona'[DeathsCount] ) )        )RETURN    DIVIDE ( num, denom )",
+            "formatString": "#,0.0%;-#,0.0%;#,0.0%",
+            "lineageTag": "e79c6098-5704-4d66-a018-c77cab4a7745"
+          },
+          {
+            "name": "Death Rate of Closed Cases %",
+            "expression": "VAR num =    CALCULATE (        SUM ( 'Corona'[DeathsCount] ),        LASTNONBLANK ( 'Corona'[CalendarId], SUM ( 'Corona'[DeathsCount] ) )    )VAR denom =    num        + CALCULATE (            SUM ( 'Corona'[RecoveredCount] ),            LASTNONBLANK ( 'Corona'[CalendarId], SUM ( 'Corona'[RecoveredCount] ) )        )RETURN    DIVIDE ( num, denom )",
+            "formatString": "#,0.0%;-#,0.0%;#,0.0%",
+            "lineageTag": "2256563d-7b23-4cd5-bc31-a473d8ade501"
+          },
+          {
+            "name": "Days Since Cases Last Doubled",
+            "expression": "VAR lastday =    CALCULATE (        MAX ( 'Calendar'[Calendar Date] ),        FILTER (            ALL ( 'Calendar' ),            CALCULATE ( SUM ( 'Corona'[ConfirmedCount] ) > 0 )        )    )VAR mostrecentcases =    CALCULATE (        SUM ( 'Corona'[ConfirmedCount] ),        FILTER ( ALL ( 'Calendar' ), 'Calendar'[Calendar Date] = lastday )    )VAR x =    CALCULATE (        MAX ( 'Calendar'[Calendar Date] ),        'Calendar'[Data Available Flag] = \"Yes\",        FILTER ( ALL ( 'Calendar' ), [Cases] < ( mostrecentcases / 2 ) )    )RETURN    DATEDIFF ( x, lastday, DAY )",
+            "formatString": "#,0",
+            "displayFolder": "Advanced",
+            "lineageTag": "f5f2c25e-fe25-4f4a-9284-5ca63df1485c"
+          },
+          {
+            "name": "Last Updated",
+            "expression": "MAX ( 'Corona'[LastUpdate] )",
+            "lineageTag": "a8719316-d941-4da6-b520-5413dee3f7d8"
+          }
+        ]
+      },
+      {
+        "name": "Scale",
+        "lineageTag": "b448682a-29a9-4212-8718-1a357b6c76eb",
+        "columns": [
+          {
+            "name": "Scale Type",
+            "dataType": "string",
+            "sourceColumn": "ScaleType",
+            "lineageTag": "af19e9cb-7437-4c7f-aea2-70ec2dc7e9ad"
+          },
+          {
+            "name": "CalendarId",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "CalendarId",
+            "lineageTag": "6a64ed6a-b1da-42de-944e-d75afb3e39da"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Scale",
+            "source": {
+              "type": "query",
+              "query": "SELECT * FROM [CoronaView].[FACT_Scale]",
+              "dataSource": "MKServer Corona"
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "ScaleSelection",
+            "expression": "IF ( SELECTEDVALUE ( 'Scale'[Scale Type] ) = \"Linear\", 0, BLANK () )",
+            "isHidden": true,
+            "lineageTag": "6eef4301-4f2b-4f04-a9d4-09a28b02966c"
+          }
+        ]
+      },
+      {
+        "name": "Testing",
+        "lineageTag": "2274d4d4-cf5f-4bcc-86a8-ed6beb11ad4f",
+        "columns": [
+          {
+            "name": "CalendarId",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "CalendarId",
+            "lineageTag": "60b34007-582d-4e9c-8310-8fd6daa7549b"
+          },
+          {
+            "name": "GeographyId",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "GeographyId",
+            "lineageTag": "3d15447c-2a8a-4d33-a3a0-7db0258df947"
+          },
+          {
+            "name": "Entity",
+            "dataType": "string",
+            "sourceColumn": "Entity",
+            "lineageTag": "ef18a30e-56aa-4686-b156-7f20132afc8c"
+          },
+          {
+            "name": "CumulativeTotalTests",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "CumulativeTotalTests",
+            "lineageTag": "2b76f0d6-983d-40f4-add0-21aaca036205"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Testing",
+            "source": {
+              "type": "query",
+              "query": "SELECT * FROM [CoronaView].[FACT_Testing]",
+              "dataSource": "MKServer Corona"
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "Cumulative Tests",
+            "expression": "IF (    HASONEVALUE ( 'Calendar'[Calendar Date] ),    SUM ( 'Testing'[CumulativeTotalTests] ),    CALCULATE (        SUM ( 'Testing'[CumulativeTotalTests] ),        LASTNONBLANK ( 'Testing'[CalendarId], SUM ( 'Testing'[CumulativeTotalTests] ) )    ))",
+            "formatString": "#,0",
+            "lineageTag": "9e82144c-db97-4028-96b5-e2614eb77663"
+          },
+          {
+            "name": "Tests",
+            "expression": "VAR x =    CALCULATE ( [Cumulative Tests], DATEADD ( 'Calendar'[Calendar Date], -1, DAY ) )VAR y = [Cumulative Tests]RETURN    IF ( NOT ( x = BLANK () || y = BLANK () ), y - x )",
+            "formatString": "#,0",
+            "lineageTag": "0f9afec1-3f43-4afe-bc6d-d471d0f40855"
+          }
+        ]
+      },
+      {
+        "name": "Calc_table",
+        "lineageTag": "15a933a2-bace-42e4-a2b7-c3f1e55a30f5",
+        "columns": [
+          {
+            "type": "calculatedTableColumn",
+            "name": "Value",
+            "dataType": "int64",
+            "isNameInferred": false,
+            "isHidden": true,
+            "sourceColumn": "[Value]",
+            "lineageTag": "9b1a8af6-9f01-44ab-ac4c-12469a62b394"
+          },
+          {
+            "type": "calculated",
+            "name": "cal_column",
+            "dataType": "int64",
+            "expression": "CALCULATE (SUM ( Corona[Longitude] ))",
+            "lineageTag": "a8b8e2ab-20ac-44c3-9f89-b65c2357e96d"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Calc_table",
+            "mode": "import",
+            "source": {
+              "type": "calculated",
+              "expression": "{'Corona'}"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Calc_table1",
+        "lineageTag": "655d593a-afb4-4dfa-93e7-4a211c571b80",
+        "columns": [
+          {
+            "type": "calculatedTableColumn",
+            "name": "Value",
+            "dataType": "int64",
+            "isNameInferred": false,
+            "isHidden": true,
+            "sourceColumn": "[Value]",
+            "lineageTag": "ecffd5f7-2dbe-4dd4-a882-ca9dcd2eaf68"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Calc_table1",
+            "mode": "import",
+            "source": {
+              "type": "calculated",
+              "expression": "CALCULATE ( SUM ( Corona[Longitude] )"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Calc_table2",
+        "lineageTag": "0dd0218f-349a-44c2-924a-f92bdeb3d5bb",
+        "columns": [
+          {
+            "type": "calculatedTableColumn",
+            "name": "Value",
+            "dataType": "int64",
+            "isNameInferred": false,
+            "isHidden": true,
+            "sourceColumn": "[Value]",
+            "lineageTag": "3e6e0938-b4b8-4530-a73f-6c921847dd18"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Calc_table2",
+            "mode": "import",
+            "source": {
+              "type": "calculated",
+              "expression": "{0}"
+            }
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "name": "0dc4cde3-b030-42c8-91ac-ba609819c785",
+        "fromTable": "Corona",
+        "fromColumn": "GeographyId",
+        "toTable": "Geography",
+        "toColumn": "GeographyId"
+      },
+      {
+        "name": "201135a4-1a4b-480c-83d9-b3f339d6d235",
+        "fromTable": "Corona",
+        "fromColumn": "CalendarId",
+        "toTable": "Calendar",
+        "toColumn": "CalendarId"
+      },
+      {
+        "name": "e6fad045-7283-4646-94e1-fd693bdb600b",
+        "fromTable": "Testing",
+        "fromColumn": "GeographyId",
+        "toTable": "Geography",
+        "toColumn": "GeographyId"
+      },
+      {
+        "name": "7138306b-a91b-42ce-9c94-bf46891b2f97",
+        "fromTable": "Testing",
+        "fromColumn": "CalendarId",
+        "toTable": "Calendar",
+        "toColumn": "CalendarId"
+      },
+      {
+        "name": "129fcf22-0496-482f-bf71-6cc4e17db348",
+        "fromTable": "Scale",
+        "fromColumn": "CalendarId",
+        "toTable": "Calendar",
+        "toColumn": "CalendarId"
+      }
+    ],
+    "roles": [
+      {
+        "name": "Reader",
+        "modelPermission": "read",
+        "members": [
+          {
+            "memberName": "DOMAIN\\alias1"
+          }
+        ],
+        "tablePermissions": [
+          {
+            "name": "Geography",
+            "filterExpression": "'Geography'[Country]=\"United States\""
+          }
+        ]
+      }
+    ],
+    "annotations": [
+      {
+        "name": "TabularEditor_SerializeOptions",
+        "value": "{\"IgnoreInferredObjects\":true,\"IgnoreInferredProperties\":true,\"IgnoreTimestamps\":true,\"SplitMultilineStrings\":true,\"PrefixFilenames\":false,\"LocalTranslations\":false,\"LocalPerspectives\":false,\"LocalRelationships\":false,\"Levels\":[\"Data Sources\",\"Shared Expressions\",\"Perspectives\",\"Relationships\",\"Roles\",\"Tables\",\"Tables/Columns\",\"Tables/Hierarchies\",\"Tables/Measures\",\"Tables/Partitions\",\"Tables/Calculation Items\",\"Translations\"]}"
+      }
+    ]
+  }
+}
