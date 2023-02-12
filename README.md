@@ -1,4 +1,6 @@
 # [Model Auto Build](https://www.elegantbi.com/post/modelautobuild "Model Auto Build")
+![tabular](https://user-images.githubusercontent.com/30090343/218331345-16f1dc57-0b7d-4a29-97f6-ba21e3f80009.PNG)
+![excel](https://user-images.githubusercontent.com/30090343/218331355-93ccd65b-0ecb-4dc7-9a76-31a77c33e4f2.PNG)
 
 Model Auto Build is a framework that dynamically creates a tabular model based on an Excel template. This framework is compatible for all destinations of tabular models - [SQL Server Analysis Services](https://docs.microsoft.com/analysis-services/ssas-overview?view=asallproducts-allversions "SSAS"), [Azure Analysis Services](https://azure.microsoft.com/services/analysis-services/ "Azure AS") and [Power BI Premium](https://powerbi.microsoft.com/power-bi-premium/ "Power BI Premium") (using the [XMLA R/W endpoint](https://docs.microsoft.com/power-bi/admin/service-premium-connect-tools "XMLA R/W endpoint")). This framework is also viable for both Import and Direct Query models.
 
